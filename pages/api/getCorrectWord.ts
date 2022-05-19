@@ -10,11 +10,10 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.query.word) {
-    res
-      .status(200)
-      .json({
-        correctWord: possible[Math.min(parseInt(<string>req.query.word), 355)],
-      });
+    res.status(200).json({
+      // correctWord: possible[Math.min(parseInt(<string>req.query.word), 355)],
+      correctWord: "glass",
+    });
   } else {
     res.status(400);
   }

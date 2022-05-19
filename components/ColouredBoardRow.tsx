@@ -11,15 +11,28 @@ const BoardRow: React.FC<{
     var arr = [];
     const correctWordIndexes = wordIndexes(correctWord);
 
-    const guessLetterCounts: { [key: string]: number } = {};
+    const appearances: { [key: string]: number } = {};
     for (var i = 0; i < correctWord.length; i++) {
       var color = "bg-gray-500";
 
       const v = guess.slice(i, i + 1);
       if (v != "") {
+        // Keeps track of the amount of times
+        // each character appears in the word
+        if (appearances[guess.charAt(i)]) {
+          appearances[guess.charAt(i)]++;
+        } else {
+          appearances[guess.charAt(i)] = 1;
+        }
+
         if (guess.charAt(i) == correctWord.charAt(i)) {
           color = "bg-green-400";
-        } else if (correctWord.includes(guess.charAt(i))) {
+        } else if (
+          // Logic to ensure that repeating letters are colored correctly
+          correctWord.includes(guess.charAt(i)) &&
+          appearances[guess.charAt(i)] <=
+            correctWordIndexes[guess.charAt(i)].length
+        ) {
           color = "bg-yellow-400";
         } else {
           color = "bg-gray-600";
