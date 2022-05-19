@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/getCorrectWord", {
+      .get(`${process.env.ROOT}/api/getCorrectWord`, {
         params: { word: getDayOfYear(new Date()) },
       })
       .then(async (res) => {
