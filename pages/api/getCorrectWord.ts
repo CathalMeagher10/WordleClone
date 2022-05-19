@@ -11,8 +11,7 @@ export default function handler(
 ) {
   if (req.query.word) {
     res.status(200).json({
-      // correctWord: possible[Math.min(parseInt(<string>req.query.word), 355)],
-      correctWord: "glass",
+      correctWord: possible[Math.min(parseInt(<string>req.query.word), 355)],
     });
   } else {
     res.status(400);
