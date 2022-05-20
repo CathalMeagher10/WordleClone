@@ -38,22 +38,12 @@ const Game: React.FC<{ correctWord: string; numberOfGuesses: number }> = ({
   const handleCharacterEnter = (key: string) => {
     if (gamewon) return;
 
-    if (key == "back") {
-      if (guess.length > 0) {
-        setGuess(guess.slice(0, guess.length - 1));
-      }
-    }
-
     if (key == "Enter") {
       submitGuess();
-      return;
-    }
-
-    if (key == "Backspace") {
+    } else if (key == "Backspace" || key == "back") {
       if (guess.length > 0) {
         setGuess(guess.slice(0, guess.length - 1));
       }
-      return;
     }
 
     //Filters out characters that are non-alphabetic

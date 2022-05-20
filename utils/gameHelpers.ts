@@ -23,6 +23,50 @@ export const wordIndexes = (word: string) => {
 
   return indexes;
 };
+
+export const getKeyboardRowColor = (
+  guess: string,
+  correctWord: string
+): string[] => {
+  const COLOR_NOT_ENTERED = "#4b5563";
+  const COLOR_CORRECT_SPOT = "#4ade80";
+  const COLOR_WRONG_SPOT = "#facc15";
+  const COLOR_NOT_ANY_SPOT = "#4b5563";
+
+  let colors = new Array(guess.length);
+  if (correctWord.length !== guess.length) {
+    return colors.fill(COLOR_NOT_ENTERED);
+  }
+
+  // color matched guess letters as correct-spot,
+  // and count unmatched word letters
+  let unmatched: { [key: string]: number } = {}; // unmatched word letters
+  for (let i = 0; i < correctWord.length; i++) {
+    let letter = correctWord[i];
+    if (letter === guess[i]) {
+      colors[i] = COLOR_CORRECT_SPOT;
+    } else {
+      unmatched[letter] = (unmatched[letter] || 0) + 1;
+    }
+  }
+
+  // color unmatched guess letters right-to-left,
+  // allocating remaining word letters as wrong-spot,
+  // otherwise, as not-any-spot
+  for (let i = 0; i < guess.length; i++) {
+    let letter = guess[i];
+    if (letter !== correctWord[i]) {
+      if (unmatched[letter]) {
+        colors[i] = COLOR_WRONG_SPOT;
+        unmatched[letter]--;
+      } else {
+        colors[i] = COLOR_NOT_ANY_SPOT;
+      }
+    }
+  }
+
+  return colors;
+};
 export const getBGColor = (
   pastGuesses: string[],
   correctWord: string,

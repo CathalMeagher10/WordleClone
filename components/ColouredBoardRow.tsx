@@ -1,7 +1,9 @@
 import { replaceBasePath } from "next/dist/server/router";
 import React, { useState, useEffect, KeyboardEvent } from "react";
 import { motion } from "framer-motion";
-import { wordIndexes } from "../utils/gameHelpers";
+import { wordIndexes, getKeyboardRowColor } from "../utils/gameHelpers";
+import { isProxy } from "util/types";
+import gu from "date-fns/esm/locale/gu/index.js";
 const BoardRow: React.FC<{
   guess: string;
   correctWord: string;
@@ -9,34 +11,12 @@ const BoardRow: React.FC<{
 }> = ({ guess, correctWord, index }) => {
   const renderRow = () => {
     var arr = [];
-    const correctWordIndexes = wordIndexes(correctWord);
+    const colors = getKeyboardRowColor(guess, correctWord);
 
-    const appearances: { [key: string]: number } = {};
-    for (var i = 0; i < correctWord.length; i++) {
-      var color = "bg-gray-500";
-
-      const v = guess.slice(i, i + 1);
-      if (v != "") {
-        // Keeps track of the amount of times
-        // each character appears in the word
-        if (appearances[guess.charAt(i)]) {
-          appearances[guess.charAt(i)]++;
-        } else {
-          appearances[guess.charAt(i)] = 1;
-        }
-
-        if (guess.charAt(i) == correctWord.charAt(i)) {
-          color = "bg-green-400";
-        } else if (
-          // Logic to ensure that repeating letters are colored correctly
-          correctWord.includes(guess.charAt(i)) &&
-          appearances[guess.charAt(i)] <=
-            correctWordIndexes[guess.charAt(i)].length
-        ) {
-          color = "bg-yellow-400";
-        } else {
-          color = "bg-gray-600";
-        }
+    for (var i = 0; i < 5; i++) {
+      var v = " ";
+      if (guess.slice(i, i + 1)) {
+        v = guess.slice(i, i + 1);
       }
 
       arr.push(
@@ -44,7 +24,8 @@ const BoardRow: React.FC<{
           key={i}
           animate={{ rotate: guess == "" ? 0 : 360 }}
           transition={{ duration: i / 5 }}
-          className={`${color} items-center  justify-center flex text-white mb-2 rounded-md mr-2 h-14 w-14 text-3xl font-bold shadow-lg text-center uppercase outline-none caret-transparent transition-all`}
+          style={{ backgroundColor: colors[i] }}
+          className={` items-center  justify-center flex text-white mb-2 rounded-md mr-2 h-14 w-14 text-3xl font-bold shadow-lg text-center uppercase outline-none caret-transparent transition-all`}
         >
           {v}
         </motion.div>
