@@ -7,14 +7,12 @@ import gu from "date-fns/esm/locale/gu/index.js";
 const BoardRow: React.FC<{
   guess: string;
   correctWord: string;
-  index: number;
-}> = ({ guess, correctWord, index }) => {
+}> = ({ guess, correctWord }) => {
   const renderRow = () => {
-    var arr = [];
+    let arr = [];
     const colors = getKeyboardRowColor(guess, correctWord);
-
     for (var i = 0; i < 5; i++) {
-      var v = " ";
+      let v = " ";
       if (guess.slice(i, i + 1)) {
         v = guess.slice(i, i + 1);
       }

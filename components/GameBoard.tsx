@@ -32,7 +32,6 @@ const GameBoard: React.FC<{
       } else {
         rows.push(
           <ColouredBoardRow
-            index={i}
             key={i}
             guess={pastGuesses[i] ? pastGuesses[i] : ""}
             correctWord={correctWord}

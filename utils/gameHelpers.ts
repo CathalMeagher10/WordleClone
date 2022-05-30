@@ -28,14 +28,14 @@ export const getKeyboardRowColor = (
   guess: string,
   correctWord: string
 ): string[] => {
-  const COLOR_NOT_ENTERED = "#4b5563";
+  const COLOR_NOT_ENTERED = "#6B7280";
   const COLOR_CORRECT_SPOT = "#4ade80";
   const COLOR_WRONG_SPOT = "#facc15";
   const COLOR_NOT_ANY_SPOT = "#4b5563";
 
   let colors = new Array(guess.length);
-  if (correctWord.length !== guess.length) {
-    return colors.fill(COLOR_NOT_ENTERED);
+  if (correctWord.length !== guess.trim().length) {
+    return new Array(correctWord.length).fill(COLOR_NOT_ENTERED);
   }
 
   // color matched guess letters as correct-spot,
