@@ -48,7 +48,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
       const color = getBGColor(pastGuesses, correctWord, keyboardMap[i]);
 
       arr.push(
-        <div
+        <button
           key={keyboardMap[i]}
           onClick={() => handleCharacterEnter(keyboardMap[i])}
           style={{ backgroundColor: color }}
@@ -56,7 +56,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
           } p-2 pt-3 pb-3 md:p-4 mb:pt-5 md:pb-5 rounded-md mr-1 text-center flex items-center justify-center uppercase text-lg`}
         >
           {keyboardMap[i]}
-        </div>
+        </button>
       );
     }
 
