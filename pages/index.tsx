@@ -17,11 +17,15 @@ import { loadGetInitialProps } from "next/dist/shared/lib/utils";
 const Home = () => {
   const numberOfGuesses = 6;
   const [correctWord, setCorrectWord] = useState("     ");
+  const [isOpen, setIsOpen] = useState(false);
 
   const fetchCorrectWord = async () => {
-    const { data } = await axios.get(`${process.env.ROOT}/api/getCorrectWord`, {
-      params: { word: getDayOfYear(new Date()) },
-    });
+    const { data } = await axios.get(
+      `${window.location.href}/api/getCorrectWord`,
+      {
+        params: { word: getDayOfYear(new Date()) },
+      }
+    );
 
     return data;
   };
@@ -30,8 +34,6 @@ const Home = () => {
     "correctWord",
     fetchCorrectWord
   );
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="h-full w-full flex justify-center bg-gray-700 items-center flex-col text-center">
